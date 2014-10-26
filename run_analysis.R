@@ -12,26 +12,23 @@ setwd("./humanActivityRecog")
 activity_set <- read.table("./activity_labels.txt")[,2]
 
 # read in the features set, second column
-features_set <- read.table("./features.txt")
+features_set <- read.table("./features.txt")[, 2]
 
 # get the rows with mean and and standard deviation
 get_meanStd <- grepl("mean|std", features_set)
 
 # rename the variables for clarity
-features_set[,2] <- gsub("^f", "freq", features_set[,2])
-features_set[,2] <- gsub("^t", "time", features_set[,2])
-features_set[,2] <- gsub("-mean", "mean", features_set[,2])
-features_set[,2] <- gsub("-std", "std_Dev", features_set[,2])
-features_set[,2] <- gsub("Acc", "accel", features_set[,2])
-features_set[,2] <- gsub("Mag", "mag", features_set[,2])
-features_set[,2] <- gsub("Body", "body", features_set[,2])
-features_set[,2] <- gsub("body.body", "body", features_set[,2])
-features_set[,2] <- gsub("angle.t", "angle-", features_set[,2])
-features_set[,2] <- gsub("Gyro", "gyro", features_set[,2])
-features_set[,2] <- gsub("Jerk", "jerk", features_set[,2])
-
-# reset features_set variable to the second column only
-features_set <- features_set[, 2] 
+features_set <- gsub("^f", "freq", features_set)
+features_set <- gsub("^t", "time", features_set)
+features_set <- gsub("-mean", "mean", features_set)
+features_set <- gsub("-std", "std_Dev", features_set)
+features_set <- gsub("Acc", "accel", features_set)
+features_set <- gsub("Mag", "mag", features_set)
+features_set <- gsub("Body", "body", features_set)
+features_set <- gsub("body.body", "body", features_set)
+features_set <- gsub("angle.t", "angle-", features_set)
+features_set <- gsub("Gyro", "gyro", features_set)
+features_set <- gsub("Jerk", "jerk", features_set)
 
 # read in the test set
 X_test_data <- read.table("./test/X_test.txt")
