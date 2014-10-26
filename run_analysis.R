@@ -50,7 +50,7 @@ X_test_data <- X_test_data[, get_meanStd]
 # load the activity labels into the the test set
 y_test_data[,2] <- activity_set[y_test_data[,1]]
 names(y_test_data) <- c("activity_number", "activity")
-names(subject_test_data) <- "subject_number"
+names(subject_test_data) <- "subj"
 
 # merge the test data into a single data table
 test_data_set <- cbind(as.data.table(subject_test_data), y_test_data, X_test_data)
@@ -61,7 +61,7 @@ X_train_data <- X_train_data[, get_meanStd]
 # load the activity labels into the training set
 y_train_data[,2] <- activity_set[y_train_data[,1]]
 names(y_train_data) <- c("activity_number", "activity")
-names(subject_train_data) <- "subject_number"
+names(subject_train_data) <- "subj"
 
 # merge the training data into a single data table
 training_data_set <- cbind(as.data.table(subject_train_data), y_train_data, X_train_data)
@@ -73,14 +73,14 @@ testTrain_all <- rbind(test_data_set, training_data_set)
 library(reshape2)
 
 # set the experiment's identifying columns
-exp_columns <- c("subject_number", "activity_number", "activity")
+exp_columns <- c("subj", "activity_number", "activity")
 desired_data_columns <- setdiff(colnames(testTrain_all), exp_columns)
 
 # melt the data so that we do not measure the experiment's identifying columns, only the others
 total_data <- melt(testTrain_all, id = exp_columns, measure.vars = desired_data_columns)
 
 # call the mean function to the desired data using dcast function
-average_data <- dcast(total_data, subject_number + activity ~ variable, mean)
+average_data <- dcast(total_data, subj + activity ~ variable, mean)
 
 # per instructions write data to file using write.table and row.names=FALSE
-write.table(average_data, file = "tidy_data1000.txt", row.names=FALSE)
+write.table(average_data, file = "tidy_data1110.txt", sep = "\t", row.names=FALSE)
